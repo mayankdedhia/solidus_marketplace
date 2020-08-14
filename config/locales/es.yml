@@ -55,6 +55,7 @@ es:
     address: Dirección
     admins: Administradores
     back_to_orders_list: Volver a Lista de órdenes
+    back_to_shipments_list: Volver a la Lista de Envíos
     back_to_suppliers: Volver a Proveedores
     business: Negocio
     cancel: Cancelar
@@ -97,7 +98,7 @@ es:
     shared:
       unauthorized:
         explained: No está autorizado para acceder a esta página
-        unauthorized: No autorizado
+        unauthorized: No autorizadoz
     show_only_incomplete_orders: Mostrar solo órdenes incompletas
     signup: Registrarse
     signup_to_become_a_supplier: Regístrese para convertirse en proveedor

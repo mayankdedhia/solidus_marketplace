@@ -57,6 +57,7 @@ en:
     address: Address
     admins: Admins
     back_to_orders_list: Back To Orders List
+    back_to_shipments_list: Back to Shipments List
     back_to_suppliers: Back To Suppliers
     business: Business
     cancel: Cancel
