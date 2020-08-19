@@ -38,7 +38,7 @@ module SolidusMarketplace
 
         def add_marketplace_reports
           marketplace_reports.each do |report|
-            Spree::Admin::ReportsController.add_available_report!(report)
+            ::Spree::Admin::ReportsController.add_available_report!(report)
           end
         end
 
@@ -48,7 +48,7 @@ module SolidusMarketplace
 
         def get_supplier_earnings
           grouped_supplier_earnings.each do |se|
-            se[:earnings] = se[:earnings].inject(Spree::Money.new(0)) do |e, c|
+            se[:earnings] = se[:earnings].inject(::Spree::Money.new(0)) do |e, c|
               c + e
             end
           end
@@ -57,7 +57,7 @@ module SolidusMarketplace
         def grouped_supplier_earnings
           params[:q] = search_params
 
-          @search = Spree::Order.complete.not_canceled.ransack(params[:q])
+          @search = ::Spree::Order.complete.not_canceled.ransack(params[:q])
           @orders = @search.result
 
           supplier_earnings_map = @orders.map(&:supplier_earnings_map)
