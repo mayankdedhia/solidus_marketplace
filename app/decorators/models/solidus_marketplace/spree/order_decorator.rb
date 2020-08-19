@@ -33,7 +33,7 @@ module SolidusMarketplace
         shipments.each do |shipment|
           if SolidusMarketplace::Config.send_supplier_email && shipment.supplier.present?
             begin
-              Spree::MarketplaceOrderMailer.supplier_order(shipment.id).deliver!
+              ::Spree::MarketplaceOrderMailer.supplier_order(shipment.id).deliver!
             rescue => ex #Errno::ECONNREFUSED => ex
               puts ex.message
               puts ex.backtrace.join("\n")
