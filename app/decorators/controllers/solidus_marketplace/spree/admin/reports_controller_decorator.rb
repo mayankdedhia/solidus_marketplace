@@ -59,9 +59,9 @@ module SolidusMarketplace
 
           @search = ::Spree::Order.complete.not_canceled.ransack(params[:q])
           @orders = @search.result
-
+          
           supplier_earnings_map = @orders.map(&:supplier_earnings_map)
-          grouped_suppliers_map = supplier_earnings_map.flatten.group_by(&:name).values
+          grouped_suppliers_map = supplier_earnings_map.flatten.group_by { |s| s[:name] }.values
           grouped_earnings = grouped_suppliers_map.map do |gs|
             h = {}
             h[:name] = nil
