@@ -12,7 +12,7 @@ module SolidusMarketplace
       end
 
       def display_final_price_with_items
-        Spree::Money.new final_price_with_items
+        ::Spree::Money.new final_price_with_items
       end
 
       def final_price_with_items
