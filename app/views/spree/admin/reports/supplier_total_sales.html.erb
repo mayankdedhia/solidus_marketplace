@@ -1,0 +1,33 @@
+<% admin_breadcrumb(link_to t('spree.reports'), spree.admin_reports_path) %>
+<% admin_breadcrumb(t('spree.supplier_total_sales')) %>
+
+<% content_for :page_actions do %>
+  <li id='export_supplier_csv'>
+    <%= link_to t('spree.export_supplier_csv'), spree.supplier_total_sales_admin_reports_url(format: 'csv'), class: 'btn btn-primary' %>
+  </li>
+<% end %>
+
+<% content_for :table_filter_title do %>
+  <%= t('spree.date_range') %>
+<% end %>
+
+<% content_for :table_filter do %>
+  <%= render partial: 'spree/admin/shared/report_order_criteria', locals: { action: :supplier_total_sales } %>
+<% end %>
+
+<table class="admin-report" data-hook="supplier_total_sales">
+  <thead>
+    <tr>
+      <th><%= t('spree.supplier') %></th>
+      <th><%= t('spree.supplier_total_sales') %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @grouped_sales.each do |grouped_sale| %>
+      <tr>
+        <td><%= grouped_sale[:name] %></td>
+        <td><%= grouped_sale[:total_sales].to_html %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

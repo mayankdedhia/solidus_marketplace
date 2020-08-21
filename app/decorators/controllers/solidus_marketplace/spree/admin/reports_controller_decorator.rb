@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'csv'
+require "csv"
 
 module SolidusMarketplace
   module Spree
@@ -20,8 +20,8 @@ module SolidusMarketplace
         end
 
         def earnings_csv
-          header1 = ['Supplier Earnings']
-          header2 = ['Supplier', 'Earnings', 'Paypal Email']
+          header1 = ["Supplier Earnings"]
+          header2 = ["Supplier", "Earnings", "Paypal Email"]
 
           CSV.generate do |csv|
             csv << header1
@@ -30,6 +30,52 @@ module SolidusMarketplace
               csv << ["#{se[:name]}",
                       "#{se[:earnings].to_html}",
                       "#{se[:paypal_email]}"]
+            end
+          end
+        end
+
+        def supplier_total_sales
+          params[:q] = search_params
+
+          @search = ::Spree::Order.complete.not_canceled.ransack(params[:q])
+          @orders = @search.result
+
+          @totals = {}
+          supplier_sales_total_map = @orders.map(&:supplier_total_sales_map)
+          grouped_suppliers_map = supplier_sales_total_map.flatten.group_by { |s| s[:name] }.values
+          @grouped_sales = grouped_suppliers_map.map do |gs|
+            h = {}
+            h[:name] = nil
+            h[:total_sales] = []
+            gs.each do |s|
+              h[:name] = s[:name] if h[:name].nil?
+              h[:total_sales] << s[:total_sales]
+            end
+            h
+          end
+
+          @grouped_sales.each do |gs|
+            gs[:total_sales] = gs[:total_sales].inject(::Spree::Money.new(0)) do |e, c|
+              c + e
+            end
+          end
+
+          respond_to do |format|
+            format.html
+            format.csv { send_data(supplier_total_sales_csv) }
+          end
+        end
+
+        def supplier_total_sales_csv
+          header1 = ["Supplier Total Sales"]
+          header2 = ["Supplier", "Total Sales"]
+
+          CSV.generate do |csv|
+            csv << header1
+            csv << header2
+            @grouped_sales.each do |se|
+              csv << ["#{se[:name]}",
+                      "#{se[:total_sales].to_html}"]
             end
           end
         end
@@ -43,7 +89,7 @@ module SolidusMarketplace
         end
 
         def marketplace_reports
-          [:earnings]
+          [:earnings, :supplier_total_sales]
         end
 
         def get_supplier_earnings
@@ -61,7 +107,7 @@ module SolidusMarketplace
           @orders = @search.result
 
           supplier_earnings_map = @orders.map(&:supplier_earnings_map)
-          grouped_suppliers_map = supplier_earnings_map.flatten.group_by(&:name).values
+          grouped_suppliers_map = supplier_earnings_map.flatten.group_by { |s| s[:name] }.values
           grouped_earnings = grouped_suppliers_map.map do |gs|
             h = {}
             h[:name] = nil

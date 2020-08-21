@@ -51,25 +51,27 @@ describe Spree::Order do
     end
   end
 
-  xdescribe '#supplier_total' do
-    let!(:order) { create(:completed_order_from_supplier_with_totals,
-                          ship_address: create(:address)) }
+  xdescribe "#supplier_total_commissions" do
+    let!(:order) {
+      create(:completed_order_from_supplier_with_totals,
+             ship_address: create(:address))
+    }
     let(:supplier) { order.suppliers.first }
-    let(:expected_supplier_total) { Spree::Money.new(15.00) }
+    let(:expected_supplier_total_commissions) { Spree::Money.new(15.00) }
 
-    context 'when passed a supplier' do
-      it 'returns the total commission earned for the order for a given supplier' do
+    context "when passed a supplier" do
+      it "returns the total commission earned for the order for a given supplier" do
         expect(order.total).to eq(150.0)
         expect(order.suppliers.count).to eq(1)
-        expect(order.supplier_total(supplier).to_s).to eq(expected_supplier_total.to_s)
+        expect(order.supplier_total_commissions(supplier).to_s).to eq(expected_supplier_total_commissions.to_s)
       end
     end
 
-    context 'when passed a user associated with a supplier' do
-      it 'returns the total commission earned for the order for a given supplier' do
+    context "when passed a user associated with a supplier" do
+      it "returns the total commission earned for the order for a given supplier" do
         expect(order.total).to eq(150.0)
         expect(order.suppliers.count).to eq(1)
-        expect(order.supplier_total(supplier)).to eq(expected_supplier_total)
+        expect(order.supplier_total_commissions(supplier)).to eq(expected_supplier_total_commissions)
       end
     end
   end

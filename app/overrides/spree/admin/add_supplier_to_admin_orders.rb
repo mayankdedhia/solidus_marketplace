@@ -4,11 +4,11 @@ Deface::Override.new(
   insert_before: '[data-hook="admin_orders_index_row_actions"]',
   text: "<td class='align-center'>
           <% if try_spree_current_user.supplier? %>
-            <%= order.supplier_total(try_spree_current_user).to_html %>
+            <%= order.supplier_total_commissions(try_spree_current_user).to_html %>
           <% else %>
             <%= order.display_total.to_html %>
           <% end %>
         </td>",
-  disabled: false
+  disabled: false,
 
 )

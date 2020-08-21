@@ -8,7 +8,23 @@ module SolidusMarketplace
         base.has_many :suppliers, through: :stock_locations
       end
 
-      def supplier_total(user_or_supplier)
+      def supplier_total_sales(user_or_supplier)
+        supplier = user_or_supplier.is_a?(::Spree::Supplier) ? user_or_supplier : user_or_supplier.supplier
+        shipments = self.shipments.by_supplier(supplier)
+        total = shipments.map(&:display_final_price_with_items)
+        ::Spree::Money.new(total.sum)
+      end
+
+      def supplier_total_sales_map
+        suppliers.map do |s|
+          {
+            name: s.name,
+            total_sales: self.supplier_total_sales(s),
+          }
+        end
+      end
+
+      def supplier_total_commissions(user_or_supplier)
         supplier = user_or_supplier.is_a?(::Spree::Supplier) ? user_or_supplier : user_or_supplier.supplier
         shipments = self.shipments.by_supplier(supplier)
         commissions = shipments.map(&:supplier_commission_total)
@@ -19,8 +35,8 @@ module SolidusMarketplace
         suppliers.map do |s|
           {
             name: s.name,
-            earnings: self.supplier_total(s),
-            paypal_email: s.paypal_email
+            earnings: self.supplier_total_commissions(s),
+            paypal_email: s.paypal_email,
           }
         end
       end

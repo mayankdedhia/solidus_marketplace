@@ -5,8 +5,12 @@ Spree::Core::Engine.routes.draw do
     resources :suppliers
     resources :reports, only: [:index] do
       collection do
-        get   :earnings
-        post  :earnings
+        get :earnings
+        post :earnings
+      end
+      collection do
+        get :supplier_total_sales
+        post :supplier_total_sales
       end
     end
 
