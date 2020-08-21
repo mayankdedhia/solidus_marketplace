@@ -121,6 +121,8 @@ es:
         invalid_password: Contraseña no válida, por favor inicie sesión o regístrese
         success: Gracias por registrarse!
     supplier_signup: Registro de proveedor
+    supplier_total_sales: Ventas totales del proveedor
+    supplier_total_sales_description: Ventas totales para proveedores durante el período de tiempo especificado
     suppliers: Proveedores
     user_admin: Usuario administrador
     remove_payment_method: Remover método de pago

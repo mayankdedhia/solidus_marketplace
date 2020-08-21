@@ -18,7 +18,7 @@ en:
           attributes:
             url:
               invalid: is invalid. Please be sure to include include 'http://'
-              not_responding: 'is invalid, not responding or redirecting to another location'
+              not_responding: "is invalid, not responding or redirecting to another location"
   spree:
     admin:
       user:
@@ -83,7 +83,7 @@ en:
     inactive: Inactive
     individual: Individual
     manage: Manage
-    must_be_logged_in: 'Must Be Logged In'
+    must_be_logged_in: "Must Be Logged In"
     name: Name
     new_supplier: New Supplier
     or: or
@@ -102,7 +102,7 @@ en:
         unauthorized: Unauthorized
     show_only_incomplete_orders: Show Only Incomplete Orders
     signup: Sign Up
-    signup_to_become_a_supplier: 'Sign Up To Become A Supplier'
+    signup_to_become_a_supplier: "Sign Up To Become A Supplier"
     supplier: Supplier
     supplier_details: Supplier Details
     supplier_earnings: Supplier Earnings
@@ -113,7 +113,7 @@ en:
         hello: "Hello %{name},"
         logging_into_your_account: logging into your account.
         manage_your_account: You may now manage your profile and inventory by
-        subject: 'Thank you for signing up.  Please verify your information.'
+        subject: "Thank you for signing up.  Please verify your information."
         thank_you_again: "Thank you again for your business, <b>%{name}</b>"
         thank_you_for_signing_up: Thank you for signing up to be a supplier.
     supplier_paypal_email: PayPal Email
@@ -124,6 +124,8 @@ en:
         invalid_password: Invalid password please sign in or sign up.
         success: Thank you for signing up!
     supplier_signup: Supplier Sign Up
+    supplier_total_sales: Supplier Total Sales
+    supplier_total_sales_description: Total sales for Suppliers over the specified time period
     suppliers: Suppliers
     user_admin: Admin User
     remove_payment_method: Remove payment method
